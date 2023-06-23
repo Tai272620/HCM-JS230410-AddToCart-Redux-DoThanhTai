@@ -15,7 +15,7 @@ const listProducts = [
         productName: "Hamburger",
         image: "../images/Hamburger.jpg",
         title:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+            "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
         price: 16,
         quantity: 1,
     },
@@ -24,7 +24,7 @@ const listProducts = [
         productName: "Bread",
         image: "../images/bread.jpg",
         title:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+            "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
         price: 13,
         quantity: 1,
     },
@@ -33,7 +33,7 @@ const listProducts = [
         productName: "Cake",
         image: "../images/Cake.jpg",
         title:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+            "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
         price: 14,
         quantity: 1,
     },
@@ -54,14 +54,20 @@ const addToCartReducer = (state = initialState, action) => {
                 cart: [...state.cart, action.newProduct]
             }
         case DELETE_PRODUCT:
+            localStorage.setItem("Cart", JSON.stringify(state.cart.filter(
+                (product) => product.productId !== action.productId
+            )))
             return {
                 ...state,
                 cart: state.cart.filter(
-                  (product) => product.productId !== action.productId
+                    (product) => product.productId !== action.productId
                 ),
-              };
+            };
         default:
-            return state
+            return {
+                ...state,
+                cart: JSON.parse(localStorage.getItem("Cart")) || []
+            }
     }
 }
 
