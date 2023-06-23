@@ -7,7 +7,7 @@ import Product from './Product';
 const { Meta } = Card;
 
 const listCart = JSON.parse(localStorage.getItem("listCart")) || [];
-export default function ListProducts({ productStore, setCartStore }) {
+export default function ListProducts({ productStore }) {
 
   const dispatch = useDispatch();
   const handleAddProduct = (product) => {
@@ -17,7 +17,7 @@ export default function ListProducts({ productStore, setCartStore }) {
     <div className='products-container'>
       <h1>List Products</h1>
       {productStore.map((product, index) => (
-        <Product product={product} key={index} handleAddProduct={handleAddProduct} setCartStore={setCartStore}/>
+        <Product product={product} key={index} handleAddProduct={handleAddProduct}/>
       ))}
   </div>
   )
