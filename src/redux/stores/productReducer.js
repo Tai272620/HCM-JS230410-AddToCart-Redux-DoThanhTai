@@ -44,15 +44,33 @@ const initialState = {
     cart: []
 }
 
-const listCart = JSON.parse(localStorage.getItem("Cart")) || []
 const addToCartReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_PRODUCT:
-            localStorage.setItem("Cart", JSON.stringify([...state.cart, action.newProduct]))
-            return {
-                ...state,
-                cart: [...state.cart, action.newProduct]
+            let tempState = [...state.cart]
+            let check = tempState.find((product) => product.productId === action.payload.product.productId)
+            if (!check) {
+                tempState.push({...action.payload.product, quantity:action.payload.quantity})
+                localStorage.setItem("Cart", JSON.stringify(tempState))
+                return {
+                    ...state,
+                    cart: tempState
+                }
+            } else {
+                tempState.map((product) => {
+                    if (product.productId === action.payload.product.productId) {
+                        return product.quantity += action.payload.quantity
+                    } else {
+                        return product
+                    }
+                })
+                localStorage.setItem("Cart", JSON.stringify(tempState))
+                return {
+                    ...state,
+                    cart: tempState
+                }
             }
+            
         case DELETE_PRODUCT:
             localStorage.setItem("Cart", JSON.stringify(state.cart.filter(
                 (product) => product.productId !== action.productId

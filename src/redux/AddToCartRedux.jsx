@@ -5,7 +5,6 @@ import CartProducts from './components/CartProducts'
 
 export default function AddToCartRedux() {
   const store = useSelector(state=>state.store)
-  // console.log(store.products)
   return (
     <div style={{display:"flex"}}>
       <ListProducts productStore={store.products}/>

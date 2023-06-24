@@ -1,13 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { deleteProduct } from '../stores/action'
+import { deleteProduct, updateProduct } from '../stores/action'
 
 export default function CartProducts({cartStore}) {
-    console.log(cartStore)
     const dispatch = useDispatch()
+    
     const handleDeleteProduct = (productId) => {
-        console.log(productId)
         dispatch(deleteProduct(productId))
+    }
+
+    const handleUpdateProduct = (product) => {
+        console.log(product)
+        dispatch(updateProduct(product))
+      
     }
     return (
         <div className='cart-container'>
@@ -24,19 +29,20 @@ export default function CartProducts({cartStore}) {
                     </tr>
                 </thead>
                 <tbody>
-                    {cartStore.map((item, index) => (
+                    {cartStore.map((product, index) => (
                         <tr key={index}>
-                            <td>{item.productId}</td>
-                            <td>{item.productName}</td>
-                            <td>{item.price} USD</td>
+                            <td>{product.productId}</td>
+                            <td>{product.productName}</td>
+                            <td>{product.price} USD</td>
                             <td>
-                                <input type="number" value={item.quantity} style={{width:"50px"}}/>
+
+                                <input type="number" defaultValue={product.quantity} style={{width:"50px"}}/>
                             </td>
-                            <td>{item.quantity * item.price} USD</td>
+                            <td>{product.quantity * product.price} USD</td>
                             <td>
-                                <button>update</button>
+                                <button onClick={() => {handleUpdateProduct(product)}}>update</button>
                                 <button onClick={() => {
-                                    handleDeleteProduct(item.productId)
+                                    handleDeleteProduct(product.productId)
                                 }}>delete</button>
                             </td>
                         </tr>

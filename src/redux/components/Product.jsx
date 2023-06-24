@@ -1,10 +1,21 @@
 import React, { useState } from 'react'
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 import { Avatar, Card } from 'antd';
+import { useDispatch } from 'react-redux';
+import { addProduct } from '../stores/action';
 const { Meta } = Card;
 
-export default function Product({product, handleAddProduct}) {
-  const [quantity, setQuantity] = useState(1)
+export default function Product({product}) {
+  
+  const dispatch = useDispatch()
+
+  function formSubmit (event, product) {
+    event.preventDefault()
+    dispatch(addProduct({
+      product:product,
+      quantity: parseInt(event.target.quantity.value)
+    }))
+  }
   
   return (
     <div className='product'>
@@ -23,11 +34,10 @@ export default function Product({product, handleAddProduct}) {
         description={product.title}
       />
     </Card>
-    <div className='product-button'>
-      <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)}/>
-      <button onClick={() => {handleAddProduct({...product, quantity:parseInt(quantity)})
-    }}>12 USD</button>
-    </div>
+    <form className='product-button' onSubmit={(e) => formSubmit(e, product)}>
+      <input type="number" defaultValue={1} name="quantity"/>
+      <button>12 USD</button>
+    </form>
   </div>
   )
 }

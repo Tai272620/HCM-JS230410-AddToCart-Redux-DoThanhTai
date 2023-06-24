@@ -10,14 +10,14 @@ const listCart = JSON.parse(localStorage.getItem("listCart")) || [];
 export default function ListProducts({ productStore }) {
 
   const dispatch = useDispatch();
-  const handleAddProduct = (product) => {
-    dispatch(addProduct(product))
-  }
+  // const handleAddProduct = (product) => {
+  //   dispatch(addProduct(product))
+  // }
   return (
     <div className='products-container'>
       <h1>List Products</h1>
       {productStore.map((product, index) => (
-        <Product product={product} key={index} handleAddProduct={handleAddProduct}/>
+        <Product product={product} key={index}/>
       ))}
   </div>
   )
