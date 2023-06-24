@@ -10,7 +10,8 @@ export const deleteProduct = (productId) => ({
     productId: productId
 })
 
-export const updateProduct = (product) => ({
+export const updateProduct = (payload) => ({
     type: UPDATE_PRODUCT,
-    product: product
+    payload: payload
   }); 
+
